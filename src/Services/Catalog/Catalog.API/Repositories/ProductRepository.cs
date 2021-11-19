@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace Catalog.API
 {
-    public class ProductRepository : RepositoryBase<Product>
+    public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
         public ProductRepository(ICatalogContext<Product> context) : base (context) {}
 
-        public async Task<IEnumerable<Product>> GetItemByName(string name)
+        public async Task<IEnumerable<Product>> GetProductByName(string name)
         {
             FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Name, name);
-
             return await context
                             .Items
                             .Find(filter)
